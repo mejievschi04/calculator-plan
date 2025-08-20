@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculator Plan Vânzări</title>
+  <link rel="stylesheet" href="style.css"/>
+
+  <!-- Chart.js pentru grafice -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- html2canvas + jsPDF pentru export PDF -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <h1>📊 Calculator Plan Vânzări</h1>
+    <div class="actions">
+      <button id="openSettingsBtn" class="btn secondary">⚙️ Setări</button>
+      <button id="exportPdfBtn" class="btn">📄 Export PDF (luna selectată)</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- PAS 1: Calculator general -->
+    <section class="card">
+      <h2>Pasul 1 — Plan General</h2>
+      <div class="grid3">
+        <label class="field">
+          <span>Luna (denumire)</span>
+          <input type="text" id="lunaNume" placeholder="ex. August 2025"/>
+        </label>
+
+        <label class="field">
+          <span>Luna precedentă (lei)</span>
+          <input type="number" id="lunaPrecedenta" value="1500000"/>
+        </label>
+
+        <label class="field">
+          <span>Aceeași lună anul trecut (lei)</span>
+          <input type="number" id="lunaAnTrecut" value="1400000"/>
+        </label>
+
+        <label class="field">
+          <span>% creștere dorită</span>
+          <input type="number" id="procentCrestere" value="10"/>
+        </label>
+
+        <div class="field">
+          <span>Plan general (calculat)</span>
+          <input type="number" id="planTotal" value="0" readonly />
+        </div>
+
+        <div class="field align-end">
+          <button id="calculeazaBtn" class="btn">📈 Calculează Plan</button>
+        </div>
+      </div>
+      <p class="hint">Formula: media(luna precedentă, aceeași lună anul trecut) × (1 + % creștere).</p>
+    </section>
+
+    <!-- PAS 2: Operatorii -->
+    <section class="card">
+      <h2>Pasul 2 — Plan pe operatori</h2>
+      <div id="operatoriContainer"></div>
+      <div class="table-wrap">
+        <table id="tabelOperatori">
+          <thead>
+            <tr>
+              <th>Operator</th>
+              <th>Plan</th>
+              <th>Rezultat obținut</th>
+              <th>Pondere din total</th>
+              <th>% realizat</th>
+            </tr>
+          </thead>
+          <tbody id="operatoriTbody">
+            <!-- rânduri generate dinamic -->
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td><strong><input type="number" id="planTotalFooter" readonly></strong></td>
+              <td><input type="number" id="rezTotal"/></td>
+              <td id="pondereTotal">100%</td>
+              <td id="realizatTotal" class="badge">0%</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="flex-end">
+        <button id="salveazaBtn" class="btn">💾 Salvează luna</button>
+      </div>
+    </section>
+
+    <!-- PAS 3: Arhivă -->
+<section class="card">
+  <h2>Arhivă luni</h2>
+  <div id="arhivaContainer"></div>
+</section>
+
+
+    <!-- FILTRARE / ISTORIC -->
+    <section class="card">
+      <div class="header-row">
+        <h2>Istoric luni salvate</h2>
+        <div class="filters">
+          <label class="field small">
+            <span>Selectează luna</span>
+            <select id="filtruLuna">
+              <option value="__ALL__">Toate</option>
+              <!-- opțiuni generate dinamic -->
+            </select>
+          </label>
+          <button id="stergeToateBtn" class="btn danger">🗑️ Șterge tot istoricul</button>
+        </div>
+      </div>
+
+      <div id="grafice" class="charts">
+        <div class="chart-card">
+          <h3>Plan vs Realizat (Total)</h3>
+          <canvas id="chartTotal"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Plan pe operatori (luna selectată)</h3>
+          <canvas id="chartOperatori"></canvas>
+        </div>
+      </div>
+
+      <div id="istoric" class="istoric"></div>
+    </section>
+  </main>
+
+  <!-- MODAL SETĂRI -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3>Setări aplicație</h3>
+        <button id="closeSettingsBtn" class="icon-btn">✖</button>
+      </div>
+      <div class="modal-body">
+        <div class="grid2">
+          <label class="field">
+            <span>% creștere implicit</span>
+            <input type="number" id="setPercentImplicit" value="10"/>
+          </label>
+          <label class="field">
+            <span>Distribuție automată plan (procente, sumă 100)</span>
+            <input type="text" id="setProcente"
+              placeholder="ex: 50, 30, 20"/>
+            <small class="hint">Dacă la calcul nu se ating 100%, ultimul operator va primi diferența.</small>
+          </label>
+        </div>
+        <label class="field">
+          <span>Nume operatori (unul pe linie)</span>
+          <textarea id="setOperatori" rows="6"
+            placeholder="Operator 1&#10;Operator 2&#10;Operator 3"></textarea>
+        </label>
+      </div>
+      <div class="modal-footer">
+        <button id="saveSettingsBtn" class="btn">💾 Salvează setările</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ZONĂ RAPORT pentru PDF -->
+ <div id="reportArea" class="hidden">
+  <div class="report-header">
+    <img src="./logo.png" alt="Logo" class="pdf-logo" crossorigin="anonymous">
+    <h2 id="repTitle"></h2>
+    <p id="repDate"></p>
+  </div>
+
+  <!-- Tabel rezumat -->
+  <table class="summary-table">
+    <thead>
+      <tr>
+        <th>Plan total</th>
+        <th>Realizat total</th>
+        <th>% realizat</th>
+      </tr>
+    </thead>
+    <tbody id="repSummaryRow"></tbody>
+  </table>
+
+  <!-- Tabel operatori -->
+  <h3>Detalii pe operatori</h3>
+  <table class="pdf-table">
+    <thead>
+      <tr>
+        <th>Operator</th>
+        <th>Plan</th>
+        <th>Realizat</th>
+        <th>%</th>
+      </tr>
+    </thead>
+    <tbody id="repTbody"></tbody>
+  </table>
+
+  <!-- Grafice -->
+  <div class="chart-container">
+    <canvas id="chartGlobal" width="300" height="200"></canvas>
+    <canvas id="chartOperators" width="600" height="300"></canvas>
+  </div>
+</div>
+
+
+
+  <script src="script.js"></script>
+  <script src="chart.min.js"></script>
+<script src="html2canvas.min.js"></script>
+<script src="jspdf.umd.min.js"></script>
+</body>
+</html>

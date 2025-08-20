@@ -1,0 +1,235 @@
+:root{
+  --bg:#f3f4f6;
+  --card:#ffffff;
+  --text:#111827;
+  --muted:#6b7280;
+  --accent:#ffcc00;
+  --accent-2:#111111;
+  --good:#059669;
+  --warn:#f59e0b;
+  --bad:#dc2626;
+  --border:#e5e7eb;
+  --shadow:0 10px 30px rgba(0,0,0,.08);
+  --radius:16px;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.topbar{
+  position:sticky; top:0; z-index:10;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px 20px; background:linear-gradient(180deg,#111 0%,#1f1f1f 100%);
+  color:#fff; box-shadow:var(--shadow);
+}
+.topbar h1{margin:0; font-weight:800; letter-spacing:.2px}
+.actions{display:flex; gap:12px}
+
+.container{max-width:1100px; margin:24px auto; padding:0 16px}
+
+.card{
+  background:var(--card); border:1px solid var(--border);
+  border-radius:var(--radius); padding:20px; box-shadow:var(--shadow);
+  margin-bottom:20px;
+}
+
+.hint{color:var(--muted); margin:.5rem 0 0}
+
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+@media (max-width:900px){
+  .grid3{grid-template-columns:1fr}
+  .grid2{grid-template-columns:1fr}
+}
+
+.field{display:flex; flex-direction:column; gap:6px}
+.field span{font-weight:600}
+.field input, .field select, .field textarea{
+  padding:10px 12px; border:1px solid var(--border); border-radius:12px;
+  background:#fff; outline:none;
+}
+.field input[readonly]{background:#fafafa}
+.align-end{display:flex; align-items:flex-end}
+
+.btn{
+  background:var(--accent); color:#000; border:none; border-radius:12px;
+  padding:10px 16px; font-weight:700; cursor:pointer;
+  box-shadow:var(--shadow);
+}
+.btn:hover{filter:brightness(.95)}
+.btn.secondary{background:#fff; color:#000; border:1px solid var(--border)}
+.btn.danger{background:var(--bad); color:#fff}
+
+.table-wrap{overflow:auto; border:1px solid var(--border); border-radius:12px}
+table{width:100%; border-collapse:collapse}
+th,td{padding:12px 10px; border-bottom:1px solid var(--border); text-align:center}
+thead th{background:#111; color:var(--accent); position:sticky; top:0}
+tfoot td{background:#fafafa; font-weight:700}
+
+.header-row{display:flex; align-items:center; justify-content:space-between; gap:16px}
+.filters{display:flex; align-items:flex-end; gap:12px}
+.field.small input,.field.small select{padding:8px 10px}
+
+.badge{
+  display:inline-block; padding:6px 10px; border-radius:999px; font-weight:700;
+  background:#eee; color:#000;
+}
+.badge.good{background:#e8fff4; color:var(--good)}
+.badge.warn{background:#fff8e6; color:var(--warn)}
+.badge.bad{background:#ffecec; color:var(--bad)}
+
+.flex-end{display:flex; justify-content:flex-end}
+
+.charts{
+  display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:10px;
+}
+.chart-card{background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px}
+@media (max-width:900px){.charts{grid-template-columns:1fr}}
+
+.modal{position:fixed; inset:0; background:rgba(0,0,0,.35); display:flex; align-items:center; justify-content:center}
+.hidden{display:none}
+.modal-dialog{width:min(740px,92vw); background:#fff; border-radius:16px; box-shadow:var(--shadow)}
+.modal-header, .modal-footer{padding:14px 16px; border-bottom:1px solid var(--border)}
+.modal-header{display:flex; align-items:center; justify-content:space-between}
+.modal-body{padding:14px 16px}
+.icon-btn{background:#000; color:#fff; border:none; border-radius:10px; padding:6px 10px; cursor:pointer}
+
+.istoric{display:grid; grid-template-columns:1fr; gap:14px}
+.istoric .item{border:1px solid var(--border); border-radius:12px; padding:12px; background:#fff}
+.istoric .row{display:grid; grid-template-columns:1fr 1fr 1fr 1fr 120px; gap:8px}
+.istoric .row strong{font-weight:800}
+
+.report{padding:20px; background:#fff; border:1px solid var(--border); border-radius:16px}
+.report-table{margin-top:12px}
+
+/* ====== STIL PDF NOU ====== */
+.pdf-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #000;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.pdf-header img.pdf-logo {
+  max-height: 50px;
+}
+
+.pdf-header h1 {
+  font-size: 18px;
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.pdf-header small {
+  font-size: 12px;
+  color: #666;
+}
+
+.pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.pdf-table thead {
+  background: #0000;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pdf-table th, 
+.pdf-table td {
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.pdf-table tbody tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.pdf-table tbody tr:hover {
+  background: #e9f2ff;
+}
+
+
+.pdf-footer {
+  text-align: right;
+  font-size: 10px;
+  color: #777;
+  border-top: 1px solid #ccc;
+  margin-top: 10px;
+  padding-top: 5px;
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.report-header img {
+  height: 50px;
+}
+
+.report-header h2 {
+  flex: 1;
+  text-align: center;
+  margin: 0;
+}
+
+.report-header p {
+  margin: 0;
+  font-size: 12px;
+  color: #666;
+  text-align: right;
+}
+
+.summary-table, .pdf-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.summary-table th, .pdf-table th {
+  background: #000;
+  color: #FFF300;
+  padding: 10px;
+  text-transform: uppercase;
+}
+
+.summary-table td, .pdf-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+}
+
+.summary-table tr:nth-child(even),
+.pdf-table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.chart-container {
+  margin-top: 30px;
+  text-align: center;
+}
+
