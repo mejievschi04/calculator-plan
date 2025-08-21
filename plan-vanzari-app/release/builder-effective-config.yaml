@@ -1,0 +1,18 @@
+directories:
+  output: release
+  buildResources: build
+appId: com.mejievschi04.calculatorplan
+productName: Calculator Plan
+win:
+  target: nsis
+  icon: logo.ico
+nsis:
+  oneClick: false
+  perMachine: true
+  allowToChangeInstallationDirectory: true
+publish:
+  - provider: github
+    owner: mejievschi04
+    repo: calculator-plan
+files: []
+electronVersion: 26.6.10
