@@ -13,13 +13,24 @@
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 </head>
 <body>
-  <header class="topbar">
-    <h1>📊 Calculator Plan Vânzări</h1>
-    <div class="actions">
-      <button id="openSettingsBtn" class="btn secondary">⚙️ Setări</button>
-      <button id="exportPdfBtn" class="btn">📄 Export PDF (luna selectată)</button>
-    </div>
-  </header>
+ <header class="topbar">
+  <!-- Stânga: logo -->
+  <div class="logo">
+    <img src="logo1.png" alt="Logo" height="50">
+  </div>
+
+  <!-- Centru: titlu aplicație -->
+  <div class="title">
+    <h1>Calculator Plan Vânzări</h1>
+  </div>
+
+  <!-- Dreapta: butoane -->
+  <div class="actions">
+    <button id="openSettingsBtn" class="btn secondary">⚙️ Setări</button>
+    <button id="exportPdfBtn" class="btn">📄 Export PDF (luna selectată)</button>
+  </div>
+</header>
+
 
   <main class="container">
     <!-- PAS 1: Calculator general -->
@@ -69,7 +80,6 @@
               <th>Operator</th>
               <th>Plan</th>
               <th>Rezultat obținut</th>
-              <th>Pondere din total</th>
               <th>% realizat</th>
             </tr>
           </thead>
@@ -81,7 +91,6 @@
               <td><strong>Total</strong></td>
               <td><strong><input type="number" id="planTotalFooter" readonly></strong></td>
               <td><input type="number" id="rezTotal"/></td>
-              <td id="pondereTotal">100%</td>
               <td id="realizatTotal" class="badge">0%</td>
             </tr>
           </tfoot>
@@ -91,13 +100,6 @@
         <button id="salveazaBtn" class="btn">💾 Salvează luna</button>
       </div>
     </section>
-
-    <!-- PAS 3: Arhivă -->
-<section class="card">
-  <h2>Arhivă luni</h2>
-  <div id="arhivaContainer"></div>
-</section>
-
 
     <!-- FILTRARE / ISTORIC -->
     <section class="card">
@@ -202,7 +204,14 @@
     <canvas id="chartGlobal" width="300" height="200"></canvas>
     <canvas id="chartOperators" width="600" height="300"></canvas>
   </div>
-</div>
+  </div>
+
+   <!-- PAS 3: Arhivă -->
+<section class="card">
+  <h2>Arhivă luni</h2>
+  <div id="arhivaContainer"></div>
+</section>
+
 
 
 

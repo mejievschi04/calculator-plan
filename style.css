@@ -21,13 +21,49 @@ body{
   color:var(--text);
 }
 
-.topbar{
-  position:sticky; top:0; z-index:10;
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 20px; background:linear-gradient(180deg,#111 0%,#1f1f1f 100%);
-  color:#fff; box-shadow:var(--shadow);
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #333; /* gri închis */
+  color: #FFF300; /* galben aprins */
+  border-bottom: 2px solid #000;
+  position: sticky;
+  top:0;
+  z-index: 1;
 }
-.topbar h1{margin:0; font-weight:800; letter-spacing:.2px}
+
+.topbar .logo img {
+  display: block;
+}
+
+.topbar .title {
+  flex: 1;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.topbar .actions {
+  text-align: right;
+}
+
+.topbar .btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #FFF300;
+  border: none;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.topbar .btn.secondary {
+  background-color: #555;
+  color: #FFF300;
+}
+
 .actions{display:flex; gap:12px}
 
 .container{max-width:1100px; margin:24px auto; padding:0 16px}

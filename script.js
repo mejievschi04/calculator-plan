@@ -122,14 +122,12 @@ function buildOperatorTable(){
       <td>${name}</td>
       <td><input type="number" class="plan-op" data-idx="${idx}" value="0"></td>
       <td><input type="number" class="rez-op" data-idx="${idx}" value=""></td>
-      <td><span class="badge" id="pondere-${idx}">0%</span></td>
       <td><span class="badge" id="realizat-${idx}">0%</span></td>
     `;
     tbody.appendChild(tr);
   });
   document.getElementById("planTotalFooter").value = 0;
   document.getElementById("rezTotal").value = "";
-  document.getElementById("pondereTotal").textContent = "100%";
   document.getElementById("realizatTotal").textContent = "0%";
   document.getElementById("realizatTotal").className = "badge";
 }
