@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcul Plan Vânzări - Explicație Detaliată</title>
+    <style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #000; /* fundal negru */
+    color: #f1c40f;        /* text galben */
+    line-height: 1.4;
+    padding: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+    font-size: 0.9rem;     /* text mai mic */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: linear-gradient(135deg, #000, #333);
+    color: #f1c40f;
+    border-radius: 6px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+h1 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+h2 {
+    color: #f1c40f;
+    margin: 25px 0 15px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #f1c40f;
+    font-size: 1.2rem;
+}
+
+h3 {
+    color: #f39c12;
+    margin: 20px 0 10px;
+    font-size: 1rem;
+}
+
+.container {
+    background: #111;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.5);
+    margin-bottom: 25px;
+    color: #f1c40f;
+}
+
+.formula-container {
+    background: #222;
+    padding: 15px;
+    border-radius: 6px;
+    border-left: 4px solid #f1c40f;
+    margin: 15px 0;
+}
+
+.formula {
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bold;
+    color: #f1c40f;
+    padding: 10px;
+    background: #333;
+    border-radius: 6px;
+}
+
+.step {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px 0;
+    padding: 15px;
+    background: #111;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.step-number {
+    background: #f1c40f;
+    color: #000;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-right: 15px;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+}
+
+.explanation, 
+.example {
+    margin: 15px 0;
+    padding: 15px;
+    background: #222;
+    border-radius: 6px;
+    color: #f1c40f;
+}
+
+.example-calculation {
+    background: #333;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-family: monospace;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.factors-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+    font-size: 0.85rem;
+}
+
+.factors-table th, 
+.factors-table td {
+    padding: 8px;
+    text-align: center;
+    border: 1px solid #444;
+}
+
+.factors-table th {
+    background-color: #f1c40f;
+    color: #000;
+}
+
+.factors-table tr:nth-child(even) {
+    background-color: #222;
+}
+
+.highlight {
+    background-color: #f39c12;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #000;
+}
+
+.variable {
+    background-color: #444;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #f1c40f;
+}
+
+.december-adjustment {
+    background: #333;
+    padding: 15px;
+    border-radius: 6px;
+    margin: 20px 0;
+    border-left: 4px solid #f1c40f;
+}
+
+.code {
+    background: #111;
+    color: #f1c40f;
+    padding: 12px;
+    border-radius: 6px;
+    margin: 20px 0;
+    font-family: monospace;
+    overflow-x: auto;
+    font-size: 0.85rem;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    color: #aaa;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 768px) {
+    .step {
+        flex-direction: column;
+    }
+    .step-number {
+        margin-bottom: 10px;
+        margin-right: 0;
+    }
+    .formula {
+        font-size: 1rem;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Calcul Plan Vânzări - Explicație Detaliată</h1>
+        <p>Înțelegerea formulei și a procesului de calcul</p>
+    </div>
+    
+    <div class="container">
+        <h2>Cum calculează programul planul de vânzări</h2>
+        
+        <div class="explanation">
+            <p>Programul utilizează o formulă sofisticată care ține cont de patru factori importanți pentru a calcula planul de vânzări:</p>
+            <ol>
+                <li>Performanța recentă (luna precedentă)</li>
+                <li>Istoricul vânzărilor (aceeași lună anul trecut)</li>
+                <li>Obiectivele de creștere</li>
+                <li>Sezonalitatea specifică fiecărei luni</li>
+            </ol>
+        </div>
+        
+        <div class="formula-container">
+            <h3>Formula principală</h3>
+            <div class="formula">
+                Plan = [ (LP × 70%) + (LPT × 30%) ] × (1 + %C) × FS
+            </div>
+            
+            <p>Unde:</p>
+            <ul>
+                <li><span class="variable">LP</span> = Vânzări luna precedentă</li>
+                <li><span class="variable">LPT</span> = Vânzări aceeași lună anul trecut</li>
+                <li><span class="variable">%C</span> = Procent creștere dorită</li>
+                <li><span class="variable">FS</span> = Factor sezonalitate (specifice fiecărei luni)</li>
+            </ul>
+        </div>
+        
+        <h2>Pașii detaliați ai calculului</h2>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Calcularea mediei ponderate</h3>
+                <p>Programul calculează o medie ponderată între vânzările din luna precedentă și vânzările din aceeași lună anul trecut.</p>
+                
+                <div class="formula">
+                    Media = (LP × 0.7) + (LPT × 0.3)
+                </div>
+                
+                <div class="explanation">
+                    <p><strong>De ce 70% și 30%?</strong></p>
+                    <p>Lunii precedente i se acordă o pondere mai mare (70%) deoarece reflectă mai bine situația curentă și tendințele recente. Aceeași lună anul trecut completează imaginea cu context istoric (30%).</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Aplicarea procentului de creștere</h3>
+                <p>La media calculată se aplică procentul de creștere dorit.</p>
+                
+                <div class="formula">
+                    Medie cu creștere = Media × (1 + %C/100)
+                </div>
+                
+                <div class="example">
+                    <p><strong>Exemplu:</strong> Dacă media este 1,500,000 lei și procentul de creștere dorit este 10%:</p>
+                    <div class="example-calculation">
+                        Medie cu creștere = 1,500,000 × (1 + 10/100) = 1,500,000 × 1.10 = 1,650,000 lei
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Ajustarea pentru sezonalitate</h3>
+                <p>Rezultatul se înmulțește cu factorul de sezonalitate specific lunii pentru care se calculează planul.</p>
+                
+                <div class="formula">
+                    Plan final = Medie cu creștere × FS
+                </div>
+                
+                <h4>Factori de sezonalitate</h4>
+                <table class="factors-table">
+                    <tr>
+                        <th>Lună</th>
+                        <th>Factor</th>
+                        <th>Explicație</th>
+                    </tr>
+                    <tr>
+                        <td>Ianuarie</td>
+                        <td>1.15</td>
+                        <td>Vânzări bune post-crăciun</td>
+                    </tr>
+                    <tr>
+                        <td>Februarie</td>
+                        <td>0.81</td>
+                        <td>Perioadă mai slabă</td>
+                    </tr>
+                    <tr>
+                        <td>Martie</td>
+                        <td>0.67</td>
+                        <td>Perioadă mai slabă</td>
+                    </tr>
+                    <tr>
+                        <td>Aprilie</td>
+                        <td>0.76</td>
+                        <td>Perioadă mai slabă</td>
+                    </tr>
+                    <tr>
+                        <td>Mai</td>
+                        <td>0.77</td>
+                        <td>Perioadă mai slabă</td>
+                    </tr>
+                    <tr>
+                        <td>Iunie</td>
+                        <td>0.62</td>
+                        <td>Perioadă de vară, vânzări reduse</td>
+                    </tr>
+                    <tr>
+                        <td>Iulie</td>
+                        <td>0.95</td>
+                        <td>Perioadă de vară</td>
+                    </tr>
+                    <tr>
+                        <td>August</td>
+                        <td>0.89</td>
+                        <td>Perioadă de vară</td>
+                    </tr>
+                    <tr>
+                        <td>Septembrie</td>
+                        <td>1.07</td>
+                        <td>Începutul toamnei, vânzări în creștere</td>
+                    </tr>
+                    <tr>
+                        <td>Octombrie</td>
+                        <td>1.22</td>
+                        <td>Vânzări bune</td>
+                    </tr>
+                    <tr>
+                        <td>Noiembrie</td>
+                        <td>1.11</td>
+                        <td>Black Friday</td>
+                    </tr>
+                    <tr>
+                        <td>Decembrie</td>
+                        <td>1.90</td>
+                        <td>Sărbători, vânzări ridicate (ajustat)</td>
+                    </tr>
+                </table>
+                
+                <div class="december-adjustment">
+                    <h4>Ajustare pentru Decembrie</h4>
+                    <p>Factorul pentru Decembrie a fost ajustat de la 2.62 la 1.90 pentru a asigura un plan de vânzări realist și realizabil.</p>
+                    <p>Acest ajustament previne planuri exagerate care ar fi dificil de atins în practică.</p>
+                </div>
+            </div>
+        </div>
+        
+        <h2>Exemplu complet</h2>
+        
+        <div class="example">
+            <p><strong>Calcul plan pentru Decembrie:</strong></p>
+            
+            <div class="example-calculation">
+                // Date de intrare
+                LP (Noiembrie) = 1,800,000 lei
+                LPT (Decembrie anul trecut) = 4,000,000 lei
+                %C (Creștere dorită) = 12%
+                FS (Factor decembrie) = 1.90
+                
+                // Pasul 1: Calcul medie ponderată
+                Media = (1,800,000 × 0.7) + (4,000,000 × 0.3)
+                Media = 1,260,000 + 1,200,000 = 2,460,000 lei
+                
+                // Pasul 2: Aplicare creștere
+                Medie cu creștere = 2,460,000 × (1 + 12/100)
+                Medie cu creștere = 2,460,000 × 1.12 = 2,755,200 lei
+                
+                // Pasul 3: Ajustare sezonalitate
+                Plan final = 2,755,200 × 1.90 = 5,234,880 lei
+            </div>
+            
+            <p>Planul de vânzări calculat pentru Decembrie este <span class="highlight">5,234,880 lei</span>.</p>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p>Sistem de calcul planuri de vânzări @Mejievschi | © 2025</p>
+    </footer>
+</body>
+</html>

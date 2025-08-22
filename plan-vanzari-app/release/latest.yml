@@ -1,8 +1,8 @@
-version: 1.1.3
+version: 1.1.4
 files:
-  - url: Calculator-Plan-Setup-1.1.3.exe
-    sha512: DbFJjBOM+VoiQujrFppxsmyHnBF/W1OV9bvrbelpC/iqQkXl6TWMJoDW2Im608I50wMIo5uEaqPfRQOw5sN1jw==
-    size: 78098359
-path: Calculator-Plan-Setup-1.1.3.exe
-sha512: DbFJjBOM+VoiQujrFppxsmyHnBF/W1OV9bvrbelpC/iqQkXl6TWMJoDW2Im608I50wMIo5uEaqPfRQOw5sN1jw==
-releaseDate: '2025-08-21T13:45:08.688Z'
+  - url: Calculator-Plan-Setup-1.1.4.exe
+    sha512: Q3nZd8FSXkLyKZ0C14pyzx7xujXrzWn/z0yiCNBJ4r+3zD+NWHD9eMTHZ/UaLvw99fmkxKMiccoL5DJPSYsEXg==
+    size: 78101124
+path: Calculator-Plan-Setup-1.1.4.exe
+sha512: Q3nZd8FSXkLyKZ0C14pyzx7xujXrzWn/z0yiCNBJ4r+3zD+NWHD9eMTHZ/UaLvw99fmkxKMiccoL5DJPSYsEXg==
+releaseDate: '2025-08-22T08:13:22.067Z'

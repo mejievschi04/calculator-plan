@@ -200,18 +200,18 @@ if (factorEl) {
 function calculeazaFactorSezonalitate(luna) {
     // Factori de sezonalitate pe lună - ajustează după necesități
     const factori = {
-        0: 0.9,   // Ianuarie - post-crăciun
-        1: 0.95,  // Februarie
-        2: 1.0,   // Martie
-        3: 1.05,  // Aprilie
-        4: 1.1,   // Mai
-        5: 1.05,  // Iunie
-        6: 0.95,  // Iulie - vacanțe
-        7: 0.9,   // August - vacanțe
-        8: 1.0,   // Septembrie
-        9: 1.15,  // Octombrie
-        10: 1.25, // Noiembrie - Black Friday
-        11: 1.3   // Decembrie - sărbători
+        0: 1.15,   // Ianuarie: 1,862,000 / 1,621,783 = 1.15
+        1: 0.81,   // Februarie: 1,307,000 / 1,621,783 = 0.81
+        2: 0.67,   // Martie: 1,088,000 / 1,621,783 = 0.67
+        3: 0.76,   // Aprilie: 1,227,000 / 1,621,783 = 0.76
+        4: 0.77,   // Mai: 1,249,000 / 1,621,783 = 0.77
+        5: 0.62,   // Iunie: 1,000,000 / 1,621,783 = 0.62
+        6: 0.95,   // Iulie: 1,533,000 / 1,621,783 = 0.95
+        7: 0.89,   // August: 1,446,000 / 1,621,783 = 0.89
+        8: 1.07,   // Septembrie: 1,730,000 / 1,621,783 = 1.07
+        9: 1.22,   // Octombrie: 1,973,000 / 1,621,783 = 1.22
+        10: 1.11,  // Noiembrie: 1,804,000 / 1,621,783 = 1.11
+        11: 1.90,   // Decembrie: limitat la 1,9 din cauza ca creste prea mult planul
     };
     
     return factori[luna] || 1.0;
@@ -611,6 +611,45 @@ new Chart(ctxGlobal, {
 
   report.classList.add("hidden"); // ascunde din nou DOM-ul
 }
+// ======================
+// Funcționalitatea ferestrei modale
+// ======================
+document.addEventListener('DOMContentLoaded', function() {
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modalClose = document.querySelector('.modal-close');
+    const modalFrame = document.getElementById('modalFrame');
+    
+    // Deschide fereastra modală
+    openModalBtn.addEventListener('click', function() {
+        modalFrame.src = 'formulaexp.html'; 
+        modalBackdrop.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    });
+    
+    // Închide cu buton X
+    modalClose.addEventListener('click', function() {
+        modalBackdrop.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+    
+    // Închide la click pe fundal
+    modalBackdrop.addEventListener('click', function(e) {
+        if (e.target === modalBackdrop) {
+            modalBackdrop.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Închide cu ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modalBackdrop.style.display === 'flex') {
+            modalBackdrop.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+    });
+});
+
 function updateExportDropdown() {
   const exportMonth = document.getElementById("exportMonth");
   exportMonth.innerHTML = '<option value="">-- alege --</option>'; // reset
@@ -699,5 +738,7 @@ document.addEventListener("click", function(e) {
 });
 
 });
+
+
 
 
