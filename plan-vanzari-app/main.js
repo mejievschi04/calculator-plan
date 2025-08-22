@@ -31,7 +31,7 @@ function createWindow() {
   autoUpdater.on('update-available', () => {
     dialog.showMessageBox(mainWindow, {
       type: 'info',
-      buttons: ['Update Now', 'Remind Me Later'],
+      buttons: ['Actualizează acum', 'Amintește mai târziu'],
       defaultId: 0,
       cancelId: 1,
       title: 'Update disponibil',
@@ -45,7 +45,7 @@ function createWindow() {
   autoUpdater.on('update-downloaded', () => {
     dialog.showMessageBox(mainWindow, {
       type: 'info',
-      buttons: ['Restart Now', 'Later'],
+      buttons: ['Restart Acum', 'Mai târziu'],
       defaultId: 0,
       cancelId: 1,
       title: 'Update descărcat',

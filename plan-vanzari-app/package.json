@@ -1,6 +1,6 @@
 {
   "name": "calculator-plan",
-  "version": "1.1.4",
+  "version": "1.2.0",
   "description": "Calculator plan vânzări",
   "main": "main.js",
   "scripts": {
@@ -27,7 +27,7 @@
     },
     "win": {
       "target": "nsis",
-      "icon": "logo.ico"
+      "icon": "logo2.ico"
     },
     "nsis": {
       "oneClick": false,
